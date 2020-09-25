@@ -1,0 +1,11 @@
+{
+    "wifi": {
+      "ssid": "QBR-2041WW_9668",
+      "password": "ctqkjhvey66"
+    },
+    "mesh": {
+        "prefix": "barabashka_abc123",
+        "password": "modern66",
+        "port": "2204"
+    }
+}
