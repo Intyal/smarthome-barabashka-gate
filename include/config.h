@@ -7,22 +7,20 @@
 
 struct config_data_t
 {
-	char ssid[32];
-	char password[64];
+	char wifi_ssid[32];
+	char wifi_password[64];
 
-    char prefix[32];
-	char password[32];
-    uint16_t port;
+    char mesh_prefix[32];
+	char mesh_password[32];
+    uint16_t mesh_port;
 };
 
 class Config {
 public:
-    Config(char *file);
+    Config(const char* file);
 	void printConfig();
-    bool loadConfig();
-    String param(String key);
+    bool loadConfig(config_data_t& data);
 
 protected:
 	char _file_name[64];
-    config_data_t _data;
 };
