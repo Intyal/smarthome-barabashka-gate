@@ -15,7 +15,7 @@
 		<nav class="nav-extended">
 			<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 			<div class="nav-wrapper light-blue darken-4">
-				<a href="#!" class="brand-logo center-align">Шлюз</a>
+				<a id="dev_name" href="#!" class="brand-logo center-align">Шлюз</a>
 			</div>
 			<div class="nav-content light-blue darken-3">
 				<span class="nav-title center-align">Подключение к WiFi</span>
@@ -82,7 +82,7 @@
 		</main>
 
 		<footer class="page-footer grey">
-			<div class="container">
+			<div id="state" class="container">
 				<div class="row">
 					<div class="col l6 s12">
 						<h6 class="white-text">Состояние шлюза.</h5>
@@ -102,6 +102,21 @@
 				</div>
 			</div>
 		</footer>
+		<script>
+			var relay = document.getElementById("state");
+			function relay_state() {
+				var request = new XMLHttpRequest();
+				request.open('POST','/post',true);
+				request.onload = function() {
+					if (request.readyState == 4 && request.status == 200) {
+						relay.innerText = request.responseText;
+					}
+				}
+				request.send();
+			}
+
+			document.addEventListener('DOMContentLoaded', relay_state);
+		</script>
 
 		<!--  Scripts-->
 		<script src="jquery-2.1.1.min.js"></script>
