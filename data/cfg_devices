@@ -1,0 +1,40 @@
+{
+"devices": [
+	{
+		"id": "abc0123456",
+		"name": "Датчик температуры",
+		"type": "barabashka_temp_sensor",
+		"data": {
+			"temperature": 30
+		},
+		"cfg": {
+			"interval": 60,
+			"mqtt_name": ""
+		} 
+	},
+	{
+		"id": "abc0123457",
+		"name": "Датчик температуры",
+		"type": "barabashka_temp_sensor",
+		"data": {
+			"temperature": 20
+		},
+		"cfg": {
+			"interval": 60,
+			"mqtt_name": ""
+		} 
+	},
+	{
+		"id": "abc0123458",
+		"name": "Датчик температуры",
+		"type": "barabashka_temp_sensor",
+		"data": {
+			"temperature": 20
+		},
+		"cfg": {
+			"interval": 60,
+			"mqtt_name": ""
+		} 
+	}
+]
+}

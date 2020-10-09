@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-		<title>Starter Template - Materialize</title>
+		<title>Шлюз умного дома</title>
 
 		<!-- CSS  -->
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -15,13 +15,7 @@
 		<nav class="nav-extended">
 			<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 			<div class="nav-wrapper light-blue darken-4">
-				<a id="dev_name" href="#!" class="brand-logo center-align">Шлюз</a>
-			</div>
-			<div class="nav-content light-blue darken-3">
-				<span class="nav-title center-align">Подключение к WiFi</span>
-				<a class="btn-floating btn-large halfway-fab waves-effect waves-light teal">
-				<i class="material-icons">check</i>
-				</a>
+				<span class="nav-title center-align"></span>
 			</div>
 		</nav>
 
@@ -30,55 +24,25 @@
 				<div class="background">
 					<img src="home.jpg">
 				</div>
-				<a href="#name"><span class="white-text name center-align"><h4>Умный дом Барабашка</h1></span></a>
+				<a href="#name"><span class="white-text name center-align"><h4>Умный дом <font size="8">Б</font></h4></span></a>
 				<a href="#name"><span class="white-text name">Шлюз</span></a>
-				<a href="#email"><span class="white-text email">версия 0.1.2</span></a>
+				<a href="#email"><span class="white-text email">версия 0.1</span></a>
 			</div></li>
 			<li><a class="subheader">Настройки</a></li>
-			<li class="active"><a class="waves-effect" href="#!"><i class="material-icons">wifi</i>Подключение к WiFi</a></li>
-			<li><a class="waves-effect" href="#!"><i class="material-icons">wifi_tethering</i>Mesh сеть</a></li>
+			<li onclick="getPage('wifi', this)" class="toggle-menu active"><a class="waves-effect" href="#wifi"><i class="material-icons">wifi</i><span class="caption-menu">Подключение к WiFi</span></a></li>
+			<li class="toggle-menu"><a class="waves-effect" href="#mesh"><i class="material-icons">wifi_tethering</i><span class="caption-menu">Mesh сеть</span></a></li>
 			<li><div class="divider"></div></li>
 			<li><a class="subheader">Subheader</a></li>
-			<li><a class="waves-effect" href="#!"><i class="material-icons">developer_board</i>Third Link With Waves</a></li>
-			<li><a class="waves-effect" href="#!"><i class="material-icons">devices_other</i>Устройства<span class="new badge">4</span></a></li>
+			<li class="toggle-menu"><a class="waves-effect" href="#test"><i class="material-icons">developer_board</i><span class="caption-menu">Third Link With Waves</span></a></li>
+			<li onclick="getPage('devices', this)" class="toggle-menu"><a class="waves-effect" href="#devices"><i class="material-icons">devices_other</i><span class="caption-menu">Устройства</span><span id="devices_count" class="new badge">4</span></a></li>
 		</ul>
 
 		<header>
 			<br>
 		</header>
 
-		<main>
-			<div class="row">
-				<div class="col s2 m3 l3 xl4">
-				
-				</div>
-				<div class="col s8 m6 l6 xl4">
-					<div class="row">
-					<form class="col s12">
-						<div class="row">
-						<div class="input-field col s12">
-							<select>
-							<option value="" disabled selected>Выберите сеть</option>
-							<option value="1">Option 1</option>
-							<option value="2">Option 2</option>
-							<option value="3">Option 3</option>
-							</select>
-							<label>Сеть WiFi</label>
-						</div>
-						</div>
-						<div class="row">
-						<div class="input-field col s12">
-							<input placeholder="Введите пароль" id="password" type="password" class="validate">
-							<label for="password">Пароль</label>
-						</div>
-						</div>
-					</form>
-					</div>
-				</div>
-				<div class="col s2 m3 l3 xl4">
-				
-				</div>
-			</div>
+		<main id="main_content">
+
 		</main>
 
 		<footer class="page-footer grey">
@@ -98,29 +62,15 @@
 			</div>
 			<div class="footer-copyright">
 				<div class="container center-align">
-					Умный дом <a class="orange-text text-lighten-3" href="#!">Барабашка</a> 2020
+					Умный дом <a class="orange-text text-lighten-3" href="#!">Б</a> 2020
 				</div>
 			</div>
 		</footer>
-		<script>
-			var relay = document.getElementById("state");
-			function relay_state() {
-				var request = new XMLHttpRequest();
-				request.open('POST','/post',true);
-				request.onload = function() {
-					if (request.readyState == 4 && request.status == 200) {
-						relay.innerText = request.responseText;
-					}
-				}
-				request.send();
-			}
-
-			document.addEventListener('DOMContentLoaded', relay_state);
-		</script>
 
 		<!--  Scripts-->
 		<script src="jquery-2.1.1.min.js"></script>
+		<script src="handlebars.min.js"></script>
 		<script src="materialize.min.js"></script>
-		<script src="init.js"></script>
+		<script src="main.js"></script>
 	</body>
 </html>

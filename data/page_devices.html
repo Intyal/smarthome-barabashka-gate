@@ -1,0 +1,68 @@
+<div class="row">
+	<div class="col s1 m1 l1 xl2">
+
+	</div>
+	<div class="col s10 m10 l10 xl8">
+		<div id="devices_list"></div>
+	</div>
+	<div class="col s1 m1 l1 xl2">
+
+	</div>
+</div>
+
+<div id="container_script" style="display: none;"></div>
+<!-- type="text/template"-->
+<script id="template_script">
+	// Начальный скрипт
+	function page_script() {
+		getValue();
+	}
+
+	// Загрузка данных
+	function getValue() {
+		let data = loadData('cfg_devices');
+		data
+			.then(function(fulfilled) {
+				let value = JSON.parse(fulfilled);
+				var devices_list = document.getElementById('devices_list');
+				var source = document.getElementById('template_item_device').innerHTML;
+				var template = Handlebars.compile(source);
+				var html = template(value);
+				devices_list.innerHTML = html;
+				
+				components_update();
+			})
+			.catch(function(error) {
+				console.log(error.message);
+			});
+	}
+</script>
+
+<script id="template_item_device_0" type="text/template">
+	<ul id="devices_list" class="collection">
+		{{#each devices}}
+		<li class="collection-item avatar">
+			<i class="material-icons circle green">insert_chart</i>
+			<span class="title">{{name}}</span>
+			<p>{{id}}<br>
+				Second Line
+			</p>
+			<a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+		</li>
+		{{/each}}
+	</ul>
+</script>
+
+<script id="template_item_device" type="text/template">
+	<ul class="collapsible">
+		{{#each devices}}
+		<li>
+			<div class="collapsible-header">
+				<i class="material-icons">filter_drama</i>
+				<p>{{name}}<br>{{id}}</p>
+			</div>
+			<div class="collapsible-body"><span>{{json_string data}}</span></div>
+		</li>
+		{{/each}}
+	</ul>
+</script>

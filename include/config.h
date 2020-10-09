@@ -8,7 +8,7 @@
 struct config_data_t
 {
 	char wifi_ssid[32];
-	char wifi_password[64];
+	char wifi_password[32];
 
     char mesh_prefix[32];
 	char mesh_password[32];

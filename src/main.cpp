@@ -15,6 +15,9 @@ int LED = 22;
 
 Scheduler deviceScheduler; // Управление задачами
 
+// Данные с настройками устройства
+config_data_t config_data;
+
 painlessMesh mesh; // Объект Mesh сети
 AsyncWebServer server(80); // Объект Web сервера
 IPAddress myIP(0,0,0,0); // IP адрес устройства
@@ -41,8 +44,6 @@ void setup() {
 	//
 	// Объект настроек устройства
 	Config gate_config(FILE_CONFIG);
-	// Данные с настройками устройства
-	config_data_t config_data;
 	// Вывод настроек в серийный порт
 	gate_config.printConfig();
 	// Загрузка настроек
@@ -74,11 +75,11 @@ void setup() {
 	// Web сервер
 	//
 	// Асинхронная обработка запросов
-    server.on("/post", HTTP_POST, [](AsyncWebServerRequest *request){
+    server.on("/cfg_wifi", HTTP_POST, [](AsyncWebServerRequest *request){
 		const size_t capacity = 8 * 64;
 		StaticJsonDocument<capacity> cfg;
 		JsonObject root  = cfg.to<JsonObject>();
-		root["entity_id"] = "test entity";
+		root["wifi"]["ssid"] = config_data.wifi_ssid;
 		char json_string[256];
 		serializeJson(root, json_string);
         request->send(200, "text/plain", json_string);
