@@ -54,12 +54,13 @@
 </script>
 
 <script id="template_item_device" type="text/template">
-	<ul class="collapsible">
+	<ul class="collapsible popout">
 		{{#each devices}}
 		<li>
 			<div class="collapsible-header">
 				<i class="material-icons">filter_drama</i>
-				<p>{{name}}<br>{{id}}</p>
+				{{name}}<br>{{id}}
+				<a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
 			</div>
 			<div class="collapsible-body"><span>{{json_string data}}</span></div>
 		</li>
