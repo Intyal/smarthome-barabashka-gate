@@ -3,6 +3,7 @@
 #include "painlessMesh.h"
 #include "AsyncTCP.h"
 #include "ESPAsyncWebServer.h"
+#include "iarduino_OLED_txt.h"
 
 // Класс работы с файлом канфигурации
 #include "config.h"
@@ -11,7 +12,10 @@
 
 #define FILE_CONFIG "/config.json"
 
-int LED = 22;
+int LED = 22; // Светодиод на плате
+
+iarduino_OLED_txt myOLED(0x78); // OLED дисплей
+extern uint8_t MediumFont[];
 
 Scheduler deviceScheduler; // Управление задачами
 
@@ -27,10 +31,27 @@ IPAddress myAPIP(0,0,0,0); // IP адрес точки доступа
 void receivedCallback( const uint32_t &from, const String &msg );
 IPAddress getlocalIP();
 
+// Встроенный датчик температуры
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-// Задача по миганию светодиодом
+uint8_t temprature_sens_read();
+
+#ifdef __cplusplus
+}
+#endif
+
+uint8_t temprature_sens_read();
+
+// Задача: мигание светодиодом
 Task BuildLedBlink(1000, TASK_FOREVER, []() {
 	digitalWrite(LED, !digitalRead(LED));
+});
+
+// Задач: считывание данных встроенного датчика температуры
+Task BuildTempSensor(3000, TASK_FOREVER, []() {
+	Serial.println((temprature_sens_read() - 32) / 1.8);
 });
 
 void setup() {
@@ -39,6 +60,11 @@ void setup() {
 
 	// Выходной Пин светодиода
 	pinMode(LED, OUTPUT);
+
+	// Инициируем работу с дисплеем
+	myOLED.begin();
+	myOLED.setFont(MediumFont);
+	myOLED.clrScr();
 
 	// Настройки
 	//
@@ -68,9 +94,10 @@ void setup() {
 
 	// Wifi сеть
 	//
-	// Вывод IP ареса точки достпа
+	// Вывод IP ареса точки доступа
 	myAPIP = IPAddress(mesh.getAPIP());
 	Serial.println("My AP IP is " + myAPIP.toString());
+	//myOLED.print(myAPIP.toString(), OLED_C, 2);
 
 	// Web сервер
 	//
@@ -93,7 +120,9 @@ void setup() {
 	//
 	// Светодиод
 	deviceScheduler.addTask(BuildLedBlink);
+	deviceScheduler.addTask(BuildTempSensor);
 	BuildLedBlink.enable();
+	BuildTempSensor.enable();
 	
 }
  
@@ -105,6 +134,7 @@ void loop() {
 	if(myIP != IPAddress(mesh.getStationIP())){
 		myIP = IPAddress(mesh.getStationIP());
 		Serial.println("My IP is " + myIP.toString());
+		//myOLED.print(myIP.toString(), OLED_C, 4);
 	}
 
 	// Выполнение задач из планировщика устройства
